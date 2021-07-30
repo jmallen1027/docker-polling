@@ -3,8 +3,6 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                cp 'env.example .env'
-                cat '.env'
                 sh 'pip install -r requirements.txt' 
             }
         }
