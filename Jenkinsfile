@@ -13,7 +13,15 @@ pipeline {
         }
         stage('Deploy') { 
             steps {
-                sh 'echo deploying' 
+                sh 'ssh -o StrictHostKeyChecking=no jeff@143.198.225.166 "source django-poll-app-76767/venv/bin/activate; \
+                cd django-poll-app-76767/polls; \
+                git pull origin test; \
+                pip install -r requirements.txt --no-warn-script-location; \
+                python manage.py migrate; \
+                deactivate; \
+                sudo systemctl restart nginx; \
+                sudo systemctl restart gunicorn "' 
+ 
             }
         }
     }
